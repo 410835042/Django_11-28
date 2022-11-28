@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<center><h1>商品一覽</h1></center>
+<hr class="rline">
+
+<center>
+    <form method='POST'>
+        {% csrf_token %}
+        商品名稱：{{ product_filter.form.product_name }}
+        品牌：{{ product_filter.form.brand }}
+        <input type="submit" class="btn btn-primary" value="查詢" />
+    </form>
+</center>
+
+<br/>
+<table class="TS">
+        <th>商品圖片</th>
+        <th>商品名稱</th>
+        <th>品牌</th>
+        <th>價格</th>
+    </thead>
+    <tbody>
+        {% for product in product_filter.qs %}
+            <tr>
+                <td style="width: 450px;"><a href ='{{ product.get_absolute_url }}'><img style="width: 200px;" src="{{ product.picture.url}}"></a></td>
+                <td>{{ product.product_name }}</td>
+                <td>{{ product.brand }}</td>
+                <td>{{ product.price }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{#<div class="pagesize">#}
+{#    {% for instance in object_list %}#}
+{#            {% if forloop.counter <= 4 and instance.picture != Null %}#}
+{#                <div class ="size">#}
+{#                    <a href ='{{ instance.get_absolute_url }}'>#}
+{#                        <div class="forimage">#}
+{#                            <img src="{{ instance.picture.url}}">#}
+{#                        </div >#}
+{#                        <div style="margin: 50px 0 0 0 ;">#}
+{#                            <p class="psize" style="font-size:18px;"> {{ instance.product_name }} </p>#}
+{#                            <p class="psize" style="font-size:14px;"> {{ instance.material_color }} </p>#}
+{#                        </div>#}
+{#                    </a>#}
+{##}
+{#                    <div>#}
+{#                        {% if request.user.identity == 0 %}  <!-- 消費者 -->#}
+{#                            <div style="display: flex;">#}
+{#                                <div style="display: flex; position: absolute; left: 20%;">#}
+{#                                    <a href="products/{{ instance.id }}/Simulate/"><button class="HomeButton">模擬配戴</button></a>#}
+{#                                </div>#}
+{##}
+{#                                <div style="display: flex; position: absolute; right: 45%;">#}
+{#                                    <form action='.' method='POST'>{% csrf_token %}#}
+{#                                        {{ form.as_p }}#}
+{#                                        {% for inst in cart %}#}
+{#                                            {% if instance.id == inst.product.id %}#}
+{#                                                <button class="chosen_heart">&#10084</button>#}
+{#                                            {% else %}#}
+{#                                                <button class="heart">&#10084</button>#}
+{#                                            {%endif%}#}
+{#                                        {%endfor%}#}
+{#                                    </form>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        {% elif request.user.identity == 1 %} <!-- 廠商 -->#}
+{#                            <a href="products/{{ instance.id }}/Simulate/"><button class="HomeButton">模擬配戴</button></a>#}
+{#                        {% endif %}#}
+{#                    </div>#}
+{#                </div>#}
+{#            {% endif %}#}
+{#    {% endfor %}#}
+{#</div>#}
+{##}
+{#<div class="pagesize">#}
+{#    {% for instance in object_list %}#}
+{#            {% if 5 <= forloop.counter and forloop.counter <= 8 %}#}
+{#                <div class ="size">#}
+{#                    <a href ='{{ instance.get_absolute_url }}'>#}
+{#                        <div class="forimage">#}
+{#                            <img src="{{ instance.picture.url }}">#}
+{#                        </div >#}
+{#                        <div style="margin: 50px 0 0 0 ;">#}
+{#                            <p class="psize" style="font-size:18px;"> {{ instance.product_name }} </p>#}
+{#                            <p class="psize" style="font-size:14px;"> {{ instance.material_color }} </p>#}
+{#                        </div>#}
+{#                    </a>#}
+{#                    {% if request.user.identity == 0 %}  <!-- 消費者 -->#}
+{#                        <div style="display: flex;">#}
+{#                            <div style="display: flex; position: absolute; left: 20%;">#}
+{#                                <a href="products/{{ instance.id }}/Simulate/"><button class="HomeButton">模擬配戴</button></a>#}
+{#                            </div>#}
+{##}
+{#                            <div style="display: flex; position: absolute; right: 45%;">#}
+{#                                {% for inst in cart %}#}
+{#                                    {% if instance.id == inst.product.id %}#}
+{#                                        <button class="chosen_heart">&#10084</button>#}
+{#                                    {%endif%}#}
+{#                                {%endfor%}#}
+{#                                <button class="heart">&#10084</button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    {% elif request.user.identity == 1 %} <!-- 廠商 -->#}
+{#                        <a href="products/{{ instance.id }}/Simulate/"><button class="HomeButton">模擬配戴</button></a>#}
+{#                    {% endif %}#}
+{#                </div>#}
+{#            {% endif %}#}
+{#    {% endfor %}#}
+{#</div>#}
+{##}
+{#<div class="pagesize">#}
+{#    {% for instance in object_list %}#}
+{#            {% if 9 <= forloop.counter and forloop.counter <= 12 %}#}
+{#                <div class ="size">#}
+{#                    <a href ='{{ instance.get_absolute_url }}'>#}
+{#                        <div class="forimage">#}
+{#                            <img src="{{ instance.picture.url }}">#}
+{#                        </div >#}
+{#                        <div style="margin: 50px 0 0 0 ;">#}
+{#                            <p class="psize" style="font-size:18px;"> {{ instance.product_name }} </p>#}
+{#                            <p class="psize" style="font-size:14px;"> {{ instance.material_color }} </p>#}
+{#                        </div>#}
+{#                    </a>#}
+{#                    {% if request.user.identity == 0 %}  <!-- 消費者 -->#}
+{#                        <div style="display: flex;">#}
+{#                            <div style="display: flex; position: absolute; left: 20%;">#}
+{#                                <a href="products/{{ instance.id }}/Simulate/"><button class="HomeButton">模擬配戴</button></a>#}
+{#                            </div>#}
+{##}
+{#                            <div style="display: flex; position: absolute; right: 45%;">#}
+{#                                {% for inst in cart %}#}
+{#                                    {% if instance.id == inst.product.id %}#}
+{#                                        <button class="chosen_heart">&#10084</button>#}
+{#                                    {%endif%}#}
+{#                                {%endfor%}#}
+{#                                <button class="heart">&#10084</button>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    {% elif request.user.identity == 1 %} <!-- 廠商 -->#}
+{#                        <a href="products/{{ instance.id }}/Simulate/"><button class="HomeButton">模擬配戴</button></a>#}
+{#                    {% endif %}#}
+{#                </div>#}
+{#            {% endif %}#}
+{#    {% endfor %}#}
+{#</div>#}
+
+{% endblock %}
